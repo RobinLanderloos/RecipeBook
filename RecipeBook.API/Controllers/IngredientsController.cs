@@ -3,16 +3,17 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RecipeBook.API.Controllers.Base;
 using RecipeBook.API.ResponseHandlers;
+using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.MediatR.Queries.Recipe;
 using RecipeBook.Infrastructure.Models.Dtos;
 
 namespace RecipeBook.API.Controllers
 {
     [Route("api/{recipeId}/[controller]")]
-    public class IngredientsController : BaseDataAccessController<IngredientLineDto, IngredientLineCreateDto>
+    public class IngredientsController : BaseDataAccessController<IngredientLineDto, IngredientLineCreateDto, IngredientLine>
     {
 
-        public IngredientsController(IMediator mediator, IMapper mapper, ILogger<IngredientsController> logger, IResponseHandler<IngredientLineDto, IngredientLineCreateDto> responseHandler) : base(mediator, mapper, logger, responseHandler)
+        public IngredientsController(IMediator mediator, IMapper mapper, ILogger<IngredientsController> logger, IResponseHandler<IngredientLineDto, IngredientLineCreateDto, IngredientLine> responseHandler) : base(mediator, mapper, logger, responseHandler)
         {
         }
 

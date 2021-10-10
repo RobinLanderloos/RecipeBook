@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RecipeBook.API.ResponseHandlers;
+using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.EntityFramework;
 using RecipeBook.Infrastructure.Models.Dtos;
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<RecipeBookContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("RecipeBook")));
-builder.Services.AddScoped<IResponseHandler<RecipeDto, RecipeCreateDto>, RecipeResponseHandler>();
+builder.Services.AddScoped<IResponseHandler<RecipeDto, RecipeCreateDto, Recipe>, RecipeResponseHandler>();
 builder.Services.AddLogging();
 builder.Services.AddAutoMapper(typeof(RecipeBook.Infrastructure.Profiles.RecipeBook).Assembly);
 builder.Services.AddMediatR(typeof(RecipeBookContext));
