@@ -31,7 +31,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
                 return null;
             }
 
-            var recipe = await _context.Recipes.Include(x => x.Ingredients).ThenInclude(x => x.UnitOfMeasurement).FirstOrDefaultAsync(x => x.Id == request.RecipeId);
+            var recipe = await _context.Recipes.Include(x => x.IngredientLines).ThenInclude(x => x.UnitOfMeasurement).FirstOrDefaultAsync(x => x.Id == request.RecipeId);
 
             if (recipe == null)
             {

@@ -18,7 +18,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
         public override async Task<IEnumerable<Domain.Models.Recipe>> Handle(GetAllRecipes request, CancellationToken cancellationToken)
         {
             LogHandling(nameof(GetAllRecipes));
-            return _context.Recipes.Include(x => x.Ingredients).ThenInclude(x => x.UnitOfMeasurement);
+            return _context.Recipes.Include(x => x.IngredientLines).ThenInclude(x => x.UnitOfMeasurement);
         }
     }
 }

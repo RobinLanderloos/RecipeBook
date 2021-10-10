@@ -46,7 +46,7 @@ namespace RecipeBook.Infrastructure.MediatR.Commands.Recipe
 
             _logger.LogInformation($"Successfully added new {nameof(request.Recipe)}");
             var recipe = await _context.Recipes
-                .Include(x => x.Ingredients)
+                .Include(x => x.IngredientLines)
                 .ThenInclude(x => x.UnitOfMeasurement)
                 .FirstOrDefaultAsync(x => x.Id == request.Recipe.Id);
             return request.Recipe;

@@ -36,7 +36,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
             {
                 _logger.LogInformation($"Getting all recipes by expression: {request.Expression}");
 
-                var recipes = await _context.Recipes.Where(request.Expression).ToListAsync();
+                var recipes = await _context.Recipes.Include(x => x.IngredientLines).Where(request.Expression).ToListAsync();
 
                 return recipes;
             }

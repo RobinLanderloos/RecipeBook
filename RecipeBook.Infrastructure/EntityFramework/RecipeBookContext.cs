@@ -19,12 +19,12 @@ namespace RecipeBook.Infrastructure.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Recipe>()
-                .HasMany(x => x.Ingredients)
+                .HasMany(x => x.IngredientLines)
                 .WithOne(x => x.Recipe);
 
             modelBuilder.Entity<IngredientLine>()
                 .HasOne(x => x.Recipe)
-                .WithMany(x => x.Ingredients);
+                .WithMany(x => x.IngredientLines);
 
             base.OnModelCreating(modelBuilder);
         }

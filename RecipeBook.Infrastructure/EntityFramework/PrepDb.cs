@@ -58,7 +58,7 @@ namespace RecipeBook.Infrastructure.EntityFramework
                 Description = "A Creamy dish from Italy",
                 CreatedAt = DateTime.Now,
                 Servings = 4,
-                Ingredients = new List<IngredientLine>()
+                IngredientLines = new List<IngredientLine>()
                 {
                     new()
                     {
