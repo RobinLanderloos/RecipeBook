@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
+using System.ComponentModel.DataAnnotations;
 
-namespace RecipeBook.Infrastructure.Models.Dtos
+namespace RecipeBook.Infrastructure.Models.Dtos.Recipe
 {
     public class RecipeCreateDto
     {

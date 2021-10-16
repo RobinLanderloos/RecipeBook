@@ -1,4 +1,4 @@
-﻿namespace RecipeBook.Infrastructure.Models.Dtos
+﻿namespace RecipeBook.Infrastructure.Models.Dtos.IngredientLine
 {
     public class IngredientLineDto : BaseDto
     {

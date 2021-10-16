@@ -3,13 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using RecipeBook.API.ResponseHandlers;
 using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.EntityFramework;
-using RecipeBook.Infrastructure.Models.Dtos;
+using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
+using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<RecipeBookContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("RecipeBook")));
-builder.Services.AddScoped<IResponseHandler<RecipeDto, RecipeCreateDto, Recipe>, RecipeResponseHandler>();
+builder.Services.AddScoped<IResponseHandler<RecipeDto, RecipeCreateDto, Recipe, GetSingleRecipeDto>, RecipeResponseHandler>();
+builder.Services.AddScoped<IResponseHandler<IngredientLineDto, IngredientLineCreateDto, IngredientLine, GetSingleIngredientDto>, IngredientLineResponseHandler>();
 builder.Services.AddLogging();
 builder.Services.AddAutoMapper(typeof(RecipeBook.Infrastructure.Profiles.RecipeBook).Assembly);
 builder.Services.AddMediatR(typeof(RecipeBookContext));

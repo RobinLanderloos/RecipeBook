@@ -1,4 +1,4 @@
-﻿namespace RecipeBook.Infrastructure.Models.Dtos
+﻿namespace RecipeBook.Infrastructure.Models.Dtos.UnitOfMeasurement
 {
     public class UnitOfMeasurementDto : BaseDto
     {

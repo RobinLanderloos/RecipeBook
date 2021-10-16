@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RecipeBook.Infrastructure.Models.Dtos
+namespace RecipeBook.Infrastructure.Models.Dtos.IngredientLine
 {
     public class IngredientLineCreateDto
     {
@@ -12,5 +12,8 @@ namespace RecipeBook.Infrastructure.Models.Dtos
 
         [Required]
         public int UnitOfMeasurementId { get; set; }
+
+        [Required]
+        public int RecipeId { get; set; }
     }
 }

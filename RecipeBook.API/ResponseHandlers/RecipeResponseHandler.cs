@@ -6,18 +6,18 @@ using RecipeBook.API.ResponseHandlers.Base;
 using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.MediatR.Commands.Recipe;
 using RecipeBook.Infrastructure.MediatR.Queries.Recipe;
-using RecipeBook.Infrastructure.Models.Dtos;
+using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 using System.Linq.Expressions;
 
 namespace RecipeBook.API.ResponseHandlers
 {
-    public class RecipeResponseHandler : BaseDataAccessResponseHandler<RecipeDto, RecipeCreateDto, Recipe>
+    public class RecipeResponseHandler : BaseDataAccessResponseHandler<RecipeDto, RecipeCreateDto, Recipe, GetSingleRecipeDto>
     {
         public RecipeResponseHandler(IMapper mapper, IMediator mediator, ILogger<RecipeResponseHandler> logger) : base(mapper, mediator, logger)
         {
         }
 
-        public override async Task<ActionResult<RecipeDto>> CreateEntityAsync(RecipeCreateDto recipeCreateDto, ModelStateDictionary modelState, string createdAtName)
+        public override async Task<ActionResult> CreateEntityAsync(RecipeCreateDto recipeCreateDto, ModelStateDictionary modelState, string createdAtName)
         {
             if (!recipeCreateDto.Ingredients.Any())
             {
@@ -46,14 +46,14 @@ namespace RecipeBook.API.ResponseHandlers
             }
         }
 
-        public override async Task<ActionResult<IEnumerable<RecipeDto>>> GetAllEntities()
+        public override async Task<ActionResult> GetAllEntities()
         {
             var recipes = await Mediator.Send(new GetAllRecipes());
 
             return Ok(Mapper.Map<IEnumerable<RecipeDto>>(recipes));
         }
 
-        public override async Task<ActionResult<IEnumerable<RecipeDto>>> GetEntitiesByCriteria(Expression<Func<Recipe, bool>> expression)
+        public override async Task<ActionResult> GetEntitiesByCriteria(Expression<Func<Recipe, bool>> expression)
         {
             var recipes = await Mediator.Send(new GetRecipesByCriteria()
             {
@@ -63,16 +63,19 @@ namespace RecipeBook.API.ResponseHandlers
             return Ok(Mapper.Map<IEnumerable<RecipeDto>>(recipes));
         }
 
-        public override async Task<ActionResult<RecipeDto>> GetEntityByCriteria(Expression<Func<Recipe, bool>> expression)
+        public override async Task<ActionResult> GetEntityByCriteria(Expression<Func<Recipe, bool>> expression)
         {
-            var recipe = await Mediator.Send(new GetRecipeByCriteria(expression));
+            var recipe = await Mediator.Send(new GetRecipeByCriteria()
+            {
+                Expression = expression
+            });
 
             return Ok(Mapper.Map<RecipeDto>(recipe));
         }
 
-        public override async Task<ActionResult<RecipeDto>> GetEntityByIdAsync(int id)
+        public override async Task<ActionResult> GetEntityByIdAsync(GetSingleRecipeDto getSingleRecipeDto)
         {
-            var recipe = await Mediator.Send(new GetRecipe(id));
+            var recipe = await Mediator.Send(new GetRecipe(getSingleRecipeDto.Id));
 
             if (recipe == null)
             {

@@ -1,5 +1,7 @@
 ﻿using RecipeBook.Domain.Models;
-using RecipeBook.Infrastructure.Models.Dtos;
+using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
+using RecipeBook.Infrastructure.Models.Dtos.Recipe;
+using RecipeBook.Infrastructure.Models.Dtos.UnitOfMeasurement;
 
 namespace RecipeBook.Infrastructure.Profiles
 {

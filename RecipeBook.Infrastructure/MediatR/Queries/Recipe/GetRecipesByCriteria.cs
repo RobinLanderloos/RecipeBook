@@ -2,19 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeBook.Infrastructure.EntityFramework;
-using RecipeBook.Infrastructure.Models.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
 {
-    public class GetRecipesByCriteria : IRequest<IEnumerable<Domain.Models.Recipe>>
+    public class GetRecipesByCriteria : BaseExpressionRequest<Domain.Models.Recipe, IEnumerable<Domain.Models.Recipe>>
     {
-        public Expression<Func<Domain.Models.Recipe, bool>> Expression { get; set; }
     }
 
     public class GetRecipesByCriteriaHandler : BaseRequestHandler<GetRecipesByCriteria, IEnumerable<Domain.Models.Recipe>>
@@ -27,7 +20,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
         {
             LogHandling(nameof(GetRecipesByCriteria));
 
-            if(request.Expression == null)
+            if (request.Expression == null)
             {
                 throw new ArgumentException(nameof(request.Expression));
             }
@@ -40,7 +33,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
 
                 return recipes;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"could not get recipes by expression: {request.Expression}: {ex.Message}");
                 return null;

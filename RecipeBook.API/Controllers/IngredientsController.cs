@@ -5,24 +5,32 @@ using RecipeBook.API.Controllers.Base;
 using RecipeBook.API.ResponseHandlers;
 using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.MediatR.Queries.Recipe;
-using RecipeBook.Infrastructure.Models.Dtos;
+using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
 
 namespace RecipeBook.API.Controllers
 {
     [Route("api/{recipeId}/[controller]")]
-    public class IngredientsController : BaseDataAccessController<IngredientLineDto, IngredientLineCreateDto, IngredientLine>
+    public class IngredientsController : BaseDataAccessController<IngredientLineDto, IngredientLineCreateDto, IngredientLine, GetSingleIngredientDto>
     {
 
-        public IngredientsController(IMediator mediator, IMapper mapper, ILogger<IngredientsController> logger, IResponseHandler<IngredientLineDto, IngredientLineCreateDto, IngredientLine> responseHandler) : base(mediator, mapper, logger, responseHandler)
+        public IngredientsController(IMapper mapper, ILogger<IngredientsController> logger, IResponseHandler<IngredientLineDto, IngredientLineCreateDto, IngredientLine, GetSingleIngredientDto> responseHandler) : base(mapper, logger, responseHandler)
         {
         }
 
         [HttpGet]
+        [Route("")]
+        [ProducesResponseType(typeof(IEnumerable<IngredientLineDto>), 200)]
         public async Task<ActionResult<IEnumerable<IngredientLineDto>>> Ingredients(int recipeId)
         {
-            var ingredients = await Mediator.Send(new GetIngredients(recipeId));
+            return await ResponseHandler.GetAllEntities();
+        }
 
-            return Ok(Mapper.Map<IEnumerable<IngredientLineDto>>(ingredients));
+        [HttpPost]
+        [Route("")]
+        [ProducesResponseType(typeof(IngredientLineDto), 200)]
+        public async Task<ActionResult<IngredientLineDto>> Ingredients(IngredientLineCreateDto dto)
+        {
+            return await ResponseHandler.CreateEntityAsync(dto, ModelState, nameof(Ingredients));
         }
     }
 }
