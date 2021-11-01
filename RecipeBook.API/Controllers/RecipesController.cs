@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecipeBook.API.Controllers.Base;
 using RecipeBook.API.ResponseHandlers;
@@ -7,6 +8,7 @@ using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 
 namespace RecipeBook.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class RecipesController : BaseDataAccessController<RecipeDto, RecipeCreateDto, Recipe, GetSingleRecipeDto>
     {

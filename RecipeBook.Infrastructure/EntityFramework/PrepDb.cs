@@ -1,23 +1,76 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using RecipeBook.Domain.Models;
 
 namespace RecipeBook.Infrastructure.EntityFramework
 {
     public static class PrepDb
     {
-        public static void SeedDatabase(ServiceProvider serviceProvider)
+        public static async Task SeedDatabase(ServiceProvider serviceProvider)
         {
             using var scope = serviceProvider.CreateScope();
 
             var context = scope.ServiceProvider.GetService<RecipeBookContext>();
+            var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+            var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
 
-            SeedUnitsOfMeasurement(context);
-            SeedRecipes(context);
+            if(userManager != null) 
+            {
+                await userManager.SeedDefaultUsers();
+            }
 
-            var recipes = context.Recipes.ToList();
+            if(roleManager != null)
+            {
+                await roleManager.SeedUserRoles();
+            }
+
+            if(context != null)
+            {
+                context.SeedUnitsOfMeasurement();
+                context.SeedRecipes();
+
+                var recipes = context.Recipes.ToList();
+            }
         }
 
-        private static void SeedUnitsOfMeasurement(RecipeBookContext context)
+        private static async Task SeedDefaultUsers(this UserManager<User> userManager)
+        {
+            var defaultEmail = "robinlanderloos@gmail.com";
+            var defaultPassword = "Rec1peB00k";
+
+            var defaultUser = new User()
+            {
+                Email = defaultEmail,
+                UserName = defaultEmail,
+                FirstName = "Robin",
+                LastName = "Landerloos"
+            };
+
+            if(await userManager.FindByEmailAsync(defaultEmail) == null)
+            {
+                await userManager.CreateAsync(new User()
+                {
+                    Email = "robinlanderloos@gmail.com",
+                    UserName = defaultEmail
+
+                }, defaultPassword);
+
+                await userManager.AddToRoleAsync(defaultUser, Authorization.DefaultRole.ToString());
+            }
+        }
+
+        private static async Task SeedUserRoles(this RoleManager<IdentityRole> roleManager)
+        {
+            foreach (var role in Enum.GetValues(typeof(Authorization.Roles)))
+            {
+                if(await roleManager.FindByNameAsync(role.ToString()) == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role.ToString()));
+                }
+            }
+        }
+
+        private static void SeedUnitsOfMeasurement(this RecipeBookContext context)
         {
             var units = new List<UnitOfMeasurement>()
             {
@@ -50,7 +103,7 @@ namespace RecipeBook.Infrastructure.EntityFramework
             SeedSet(context, units);
         }
 
-        private static void SeedRecipes(RecipeBookContext context)
+        private static void SeedRecipes(this RecipeBookContext context)
         {
             var pastaCarbonara = new Recipe()
             {

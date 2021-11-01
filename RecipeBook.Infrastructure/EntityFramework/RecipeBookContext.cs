@@ -47,8 +47,8 @@ namespace RecipeBook.Infrastructure.EntityFramework
             var addedEntries = ChangeTracker
                 .Entries()
                 .Where(e => e.Entity is AuditEntity
-                && e.State == EntityState.Added
-                || e.State == EntityState.Modified);
+                && (e.State == EntityState.Added
+                || e.State == EntityState.Modified));
 
             foreach (var addedEntry in addedEntries)
             {
