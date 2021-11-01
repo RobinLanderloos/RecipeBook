@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RecipeBook.API.Controllers.Base;
 using RecipeBook.API.ResponseHandlers;
 using RecipeBook.Domain.Models;
-using RecipeBook.Infrastructure.MediatR.Queries.Recipe;
 using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
 
 namespace RecipeBook.API.Controllers

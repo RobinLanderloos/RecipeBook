@@ -1,22 +1,19 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeBook.Infrastructure.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeBook.Infrastructure.MediatR.Queries.IngredientLine
 {
     public class GetIngredientLinesByCriteria : BaseExpressionRequest<Domain.Models.IngredientLine, IEnumerable<Domain.Models.IngredientLine>>
     {
+        public GetIngredientLinesByCriteria(Expression<Func<Domain.Models.IngredientLine, bool>> expression) : base(expression)
+        {
+        }
     }
 
     public class GetIngredientLinesByCriteriaHandler : BaseRequestHandler<GetIngredientLinesByCriteria, IEnumerable<Domain.Models.IngredientLine>>
-{
+    {
         public GetIngredientLinesByCriteriaHandler(RecipeBookContext context, ILogger<GetIngredientLinesByCriteriaHandler> logger) : base(context, logger)
         {
         }
@@ -25,7 +22,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.IngredientLine
         {
             LogHandling(nameof(GetIngredientLinesByCriteria));
 
-            if(request.Expression == null)
+            if (request.Expression == null)
             {
                 throw new ArgumentException(nameof(request.Expression));
             }
@@ -38,7 +35,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.IngredientLine
 
                 return ingredientLines;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Could not get {nameof(IngredientLine)} by expression: {request.Expression}: {ex.Message}");
                 return null;

@@ -2,18 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeBook.Infrastructure.EntityFramework;
-using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeBook.Infrastructure.MediatR.Queries.IngredientLine
 {
     public class GetAllIngredientLines : IRequest<IEnumerable<Domain.Models.IngredientLine>>
     {
-        
+
     }
 
     public class GetAllIngredientLinesHandler : BaseRequestHandler<GetAllIngredientLines, IEnumerable<Domain.Models.IngredientLine>>

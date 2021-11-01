@@ -5,6 +5,11 @@ namespace RecipeBook.Infrastructure.MediatR.Queries
 {
     public abstract class BaseExpressionRequest<TEntity, TOut> : IRequest<TOut>
     {
-        public Expression<Func<TEntity,bool>> Expression { get; set; }
+        protected BaseExpressionRequest(Expression<Func<TEntity, bool>> expression)
+        {
+            Expression = expression;
+        }
+
+        public Expression<Func<TEntity, bool>> Expression { get; set; }
     }
 }

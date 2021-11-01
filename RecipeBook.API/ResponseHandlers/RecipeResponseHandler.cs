@@ -55,20 +55,14 @@ namespace RecipeBook.API.ResponseHandlers
 
         public override async Task<ActionResult> GetEntitiesByCriteria(Expression<Func<Recipe, bool>> expression)
         {
-            var recipes = await Mediator.Send(new GetRecipesByCriteria()
-            {
-                Expression = expression
-            });
+            var recipes = await Mediator.Send(new GetRecipesByCriteria(expression));
 
             return Ok(Mapper.Map<IEnumerable<RecipeDto>>(recipes));
         }
 
         public override async Task<ActionResult> GetEntityByCriteria(Expression<Func<Recipe, bool>> expression)
         {
-            var recipe = await Mediator.Send(new GetRecipeByCriteria()
-            {
-                Expression = expression
-            });
+            var recipe = await Mediator.Send(new GetRecipeByCriteria(expression));
 
             return Ok(Mapper.Map<RecipeDto>(recipe));
         }

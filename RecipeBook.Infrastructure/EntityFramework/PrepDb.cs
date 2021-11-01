@@ -55,7 +55,7 @@ namespace RecipeBook.Infrastructure.EntityFramework
             var pastaCarbonara = new Recipe()
             {
                 Name = "Pasta Carbonara",
-                Description = "A Creamy dish from Italy",
+                Description = "A creamy dish from Italy",
                 CreatedAt = DateTime.Now,
                 Servings = 4,
                 IngredientLines = new List<IngredientLine>()

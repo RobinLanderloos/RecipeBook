@@ -8,7 +8,6 @@ using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.MediatR.Commands.IngredientLine;
 using RecipeBook.Infrastructure.MediatR.Queries.IngredientLine;
 using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
-using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 using System.Linq.Expressions;
 
 namespace RecipeBook.API.ResponseHandlers
@@ -31,12 +30,12 @@ namespace RecipeBook.API.ResponseHandlers
                 modelState.AddModelError(nameof(createDto.UnitOfMeasurementId), ModelStateErrors.ModelError.InvalidId);
             }
 
-            if(createDto.IngredientAmount <= 0)
+            if (createDto.IngredientAmount <= 0)
             {
                 modelState.AddModelError(nameof(createDto.IngredientAmount), ModelStateErrors.ModelError.GreaterThanZero);
             }
 
-            if(createDto.RecipeId <= 0)
+            if (createDto.RecipeId <= 0)
             {
                 modelState.AddModelError(nameof(createDto.RecipeId), ModelStateErrors.ModelError.InvalidId);
             }
@@ -68,20 +67,14 @@ namespace RecipeBook.API.ResponseHandlers
 
         public override async Task<ActionResult> GetEntitiesByCriteria(Expression<Func<IngredientLine, bool>> expression)
         {
-            var ingredientLines = await Mediator.Send(new GetIngredientLinesByCriteria()
-            {
-                Expression = expression
-            });
+            var ingredientLines = await Mediator.Send(new GetIngredientLinesByCriteria(expression));
 
             return Ok(Mapper.Map<IEnumerable<IngredientLineDto>>(ingredientLines));
         }
 
         public override async Task<ActionResult> GetEntityByCriteria(Expression<Func<IngredientLine, bool>> expression)
         {
-            var ingredientLine = await Mediator.Send(new GetIngredientLineByCriteria()
-            {
-                Expression = expression
-            });
+            var ingredientLine = await Mediator.Send(new GetIngredientLineByCriteria(expression));
 
             return Ok(Mapper.Map<IngredientLineDto>(ingredientLine));
         }
@@ -93,7 +86,7 @@ namespace RecipeBook.API.ResponseHandlers
                 Id = getSingleIngredientDto.IngredientId
             });
 
-            if(ingredientLine == null)
+            if (ingredientLine == null)
             {
                 return NotFound();
             }

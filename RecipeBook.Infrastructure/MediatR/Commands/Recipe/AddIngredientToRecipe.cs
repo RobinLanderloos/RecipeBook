@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.EntityFramework;
 
 namespace RecipeBook.Infrastructure.MediatR.Commands.Recipe

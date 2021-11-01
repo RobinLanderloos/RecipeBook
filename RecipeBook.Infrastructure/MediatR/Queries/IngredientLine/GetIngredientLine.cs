@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeBook.Infrastructure.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeBook.Infrastructure.MediatR.Queries.IngredientLine
 {
@@ -32,7 +27,7 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.IngredientLine
 
             var ingredientLine = await _context.IngredientLines.Include(x => x.Recipe).Include(x => x.UnitOfMeasurement).FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            if(ingredientLine == null)
+            if (ingredientLine == null)
             {
                 _logger.LogWarning($"Could not find {nameof(Domain.Models.IngredientLine)} with an {nameof(Domain.Models.IngredientLine.Id)} of {request.Id}");
             }

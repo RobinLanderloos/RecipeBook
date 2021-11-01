@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeBook.Infrastructure.EntityFramework;
 using System.Linq.Expressions;
@@ -8,6 +7,9 @@ namespace RecipeBook.Infrastructure.MediatR.Queries.Recipe
 {
     public class GetRecipesByCriteria : BaseExpressionRequest<Domain.Models.Recipe, IEnumerable<Domain.Models.Recipe>>
     {
+        public GetRecipesByCriteria(Expression<Func<Domain.Models.Recipe, bool>> expression) : base(expression)
+        {
+        }
     }
 
     public class GetRecipesByCriteriaHandler : BaseRequestHandler<GetRecipesByCriteria, IEnumerable<Domain.Models.Recipe>>

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RecipeBook.API.Controllers.Base;
 using RecipeBook.API.ResponseHandlers;
