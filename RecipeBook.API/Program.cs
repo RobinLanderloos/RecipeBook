@@ -1,15 +1,8 @@
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using RecipeBook.API.Extensions;
-using RecipeBook.API.ResponseHandlers;
-using RecipeBook.API.Services;
 using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.EntityFramework;
-using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
-using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 
 var builder = WebApplication.CreateBuilder(args);
 

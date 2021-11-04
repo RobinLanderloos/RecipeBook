@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RecipeBook.Infrastructure.Models.Dtos.Authentication
+﻿namespace RecipeBook.Infrastructure.Models.Dtos.Authentication
 {
     public class AuthenticationDto
     {

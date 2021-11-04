@@ -7,15 +7,11 @@ using RecipeBook.API.Services;
 using RecipeBook.Domain.Models;
 using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
 using RecipeBook.Infrastructure.Models.Dtos.Recipe;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipeBook.API.Extensions
 {
-    public static class ServiceCollectionExtensions 
+    public static class ServiceCollectionExtensions
     {
         public static void AddResponseHandlers(this IServiceCollection services)
         {

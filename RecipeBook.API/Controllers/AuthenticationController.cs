@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RecipeBook.Domain.Models;
-using Microsoft.AspNetCore.Identity;
-using MediatR;
-using RecipeBook.Infrastructure.Models.Dtos.Authentication;
 using RecipeBook.API.Services;
+using RecipeBook.Infrastructure.Models.Dtos.Authentication;
 
 namespace RecipeBook.API.Controllers
 {
@@ -32,11 +29,11 @@ namespace RecipeBook.API.Controllers
 
         [HttpPost]
         [Route("GetToken")]
-        public async Task<ActionResult> GetToken(LoginDto loginDto) 
+        public async Task<ActionResult> GetToken(LoginDto loginDto)
         {
             var result = await _userService.GetToken(loginDto);
 
-            if(result.Token != null)
+            if (result.Token != null)
             {
                 return Ok(result);
             }

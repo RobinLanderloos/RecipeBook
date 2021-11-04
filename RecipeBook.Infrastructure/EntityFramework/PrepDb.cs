@@ -14,17 +14,17 @@ namespace RecipeBook.Infrastructure.EntityFramework
             var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
             var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
 
-            if(userManager != null) 
+            if (userManager != null)
             {
                 await userManager.SeedDefaultUsers();
             }
 
-            if(roleManager != null)
+            if (roleManager != null)
             {
                 await roleManager.SeedUserRoles();
             }
 
-            if(context != null)
+            if (context != null)
             {
                 context.SeedUnitsOfMeasurement();
                 context.SeedRecipes();
@@ -46,7 +46,7 @@ namespace RecipeBook.Infrastructure.EntityFramework
                 LastName = "Landerloos"
             };
 
-            if(await userManager.FindByEmailAsync(defaultEmail) == null)
+            if (await userManager.FindByEmailAsync(defaultEmail) == null)
             {
                 await userManager.CreateAsync(new User()
                 {
@@ -63,7 +63,7 @@ namespace RecipeBook.Infrastructure.EntityFramework
         {
             foreach (var role in Enum.GetValues(typeof(Authorization.Roles)))
             {
-                if(await roleManager.FindByNameAsync(role.ToString()) == null)
+                if (await roleManager.FindByNameAsync(role.ToString()) == null)
                 {
                     await roleManager.CreateAsync(new IdentityRole(role.ToString()));
                 }
