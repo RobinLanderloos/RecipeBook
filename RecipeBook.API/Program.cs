@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using RecipeBook.API.Extensions;
 using RecipeBook.API.ResponseHandlers;
 using RecipeBook.API.Services;
@@ -17,9 +18,8 @@ builder.Services.AddDbContexts<RecipeBookContext, RecipeBookContext, User>(
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.ConfigureIdentity();
 
-builder.Services.AddScoped<IResponseHandler<RecipeDto, RecipeCreateDto, Recipe, GetSingleRecipeDto>, RecipeResponseHandler>();
-builder.Services.AddScoped<IResponseHandler<IngredientLineDto, IngredientLineCreateDto, IngredientLine, GetSingleIngredientDto>, IngredientLineResponseHandler>();
-builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddResponseHandlers();
+builder.Services.AddServices();
 
 builder.Services.AddLogging();
 builder.Services.AddAutoMapper(typeof(RecipeBook.Infrastructure.Profiles.RecipeBook).Assembly);
@@ -28,6 +28,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "RecipeBook.API", Version = "v1" });
+    c.AddBearerTokenConfiguration();
 });
 
 PrepDb.SeedDatabase(builder.Services.BuildServiceProvider()).Wait();
@@ -43,8 +44,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

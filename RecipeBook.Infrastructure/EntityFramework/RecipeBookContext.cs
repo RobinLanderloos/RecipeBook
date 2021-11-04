@@ -32,14 +32,19 @@ namespace RecipeBook.Infrastructure.EntityFramework
 
         public override int SaveChanges()
         {
-            SetAuditFields();
+            BeforeSaveChanges();
             return base.SaveChanges();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            SetAuditFields();
+            BeforeSaveChanges();
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void BeforeSaveChanges()
+        {
+            SetAuditFields();
         }
 
         private void SetAuditFields()

@@ -32,7 +32,7 @@ namespace RecipeBook.API.Controllers
 
         [HttpPost]
         [Route("GetToken")]
-        public async Task<ActionResult> Login(LoginDto loginDto) 
+        public async Task<ActionResult> GetToken(LoginDto loginDto) 
         {
             var result = await _userService.GetToken(loginDto);
 

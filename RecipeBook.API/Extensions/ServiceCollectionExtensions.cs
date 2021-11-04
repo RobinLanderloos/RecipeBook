@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using RecipeBook.API.ResponseHandlers;
+using RecipeBook.API.Services;
 using RecipeBook.Domain.Models;
+using RecipeBook.Infrastructure.Models.Dtos.IngredientLine;
+using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +17,17 @@ namespace RecipeBook.API.Extensions
 {
     public static class ServiceCollectionExtensions 
     {
+        public static void AddResponseHandlers(this IServiceCollection services)
+        {
+            services.AddScoped<IResponseHandler<RecipeDto, RecipeCreateDto, Recipe, GetSingleRecipeDto>, RecipeResponseHandler>();
+            services.AddScoped<IResponseHandler<IngredientLineDto, IngredientLineCreateDto, IngredientLine, GetSingleIngredientDto>, IngredientLineResponseHandler>();
+        }
+
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddTransient<IUserService, UserService>();
+        }
+
         public static void AddDbContexts<TDBContext, TIdentityContext, TUser>(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction)
             where TDBContext : DbContext
             where TIdentityContext : DbContext

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RecipeBook.API.Controllers.Base;
 using RecipeBook.API.ResponseHandlers;
 using RecipeBook.Domain.Models;
+using RecipeBook.Infrastructure;
 using RecipeBook.Infrastructure.Models.Dtos.Recipe;
 
 namespace RecipeBook.API.Controllers
